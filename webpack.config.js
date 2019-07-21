@@ -7,8 +7,14 @@ module.exports = {
 
 	devServer: {
 		inline: true,
+		contentBase: __dirname + '/src/main/resources/static/',
+		compress: true,
+		publicPath: '/',
+		host: "0.0.0.0",
 		port: 7777,
-		contentBase: __dirname + '/src/main/resources/static/'
+		proxy: {
+			"**": "http://localhost:8080"
+		}
 	},
 
 	module: {

@@ -10,10 +10,11 @@ const defaultState = {
 
 const Reducer = (state = defaultState, action) => {
 	switch (action.type) {
-		case Actions.SEARCH:
-			return Object.assign({}, state, { condition: action.condition });
+		case Actions.UPDATE_CONDITION:
+			return Object.assign({}, state, { condition: action.value });
 		case Actions.UPDATE_SEARCH_RESULT:
-			return Object.assign({}, state, { searchResult: action.searchResult });
+			console.log(action.value)
+			return Object.assign({}, state, { searchResult: action.value });
 
 		default:
 			return state;

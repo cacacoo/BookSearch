@@ -1,8 +1,16 @@
 import React from "react";
 import { connect } from "react-redux"
 import Service from "./service";
-
-import {Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import BookAppBar from "./ui/appbar"
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableRow,
+	TableFooter,
+	TablePagination,
+} from '@material-ui/core';
 
 class BookContainer extends React.Component {
 
@@ -15,7 +23,7 @@ class BookContainer extends React.Component {
 			documents = []
 		} = searchResult;
 
-		return Object.keys(documents).map((book) => {
+		return documents.map((book) => {
 			return (
 				<BookRow
 					book={book}
@@ -23,10 +31,64 @@ class BookContainer extends React.Component {
 		});
 	}
 
+	searchKeyword(keyword) {
+		this.props.search({
+			query: keyword,
+			page: 1,
+			size: 10
+		});
+	}
+
+	handleChangePage(event, newPage) {
+		const {
+			condition = {},
+			search
+		} = this.props;
+
+		search({
+			query: condition.query,
+			page: newPage+1	,
+			size: condition.size
+		});
+	}
+
+	handleChangeRowsPerPage(event) {
+		const {
+			condition = {},
+			search
+		} = this.props;
+
+		search({
+			query: condition.query,
+			page: 1,
+			size: +event.target.value
+		});
+	}
+
 	render() {
+		const {
+			condition = {},
+			searchResult = {}
+		} = this.props;
+
+		const {
+			meta = {},
+		} = searchResult;
+
+		const {
+			pageableCount = 10,
+		} = meta;
+
+		const {
+			page,
+			size
+		} = condition;
+
 		return (
 			<div>
-				<h1>book list</h1>
+				<BookAppBar
+					searchKeyword={(keyword) => this.searchKeyword(keyword)}
+				/>
 				<Table>
 					<TableHead>
 						<TableRow>
@@ -39,6 +101,23 @@ class BookContainer extends React.Component {
 					<TableBody>
 						{this.renderRows()}
 					</TableBody>
+					<TableFooter>
+						<TableRow>
+							<TablePagination
+								rowsPerPageOptions={[5, 10, 25]}
+								colSpan={3}
+								count={pageableCount}
+								rowsPerPage={size}
+								page={page-1}
+								SelectProps={{
+									inputProps: { 'aria-label': 'Rows per page' },
+									native: true,
+								}}
+								onChangePage={(event, page) => this.handleChangePage(event, page)}
+								onChangeRowsPerPage={(event) => this.handleChangeRowsPerPage(event)}
+							/>
+						</TableRow>
+					</TableFooter>
 				</Table>
 			</div>
 		)
@@ -46,7 +125,6 @@ class BookContainer extends React.Component {
 }
 
 class BookRow extends React.Component {
-
 
 	render() {
 		const {

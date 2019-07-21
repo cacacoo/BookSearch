@@ -2,9 +2,9 @@ import Action from './actions'
 import { search } from './domain'
 
 const ActionCreator = {
-	search(condition) {
+	updateCondition(condition) {
 		return {
-			type: Action.SEARCH,
+			type: Action.UPDATE_CONDITION,
 			value: condition
 		};
 	},
@@ -17,11 +17,13 @@ const ActionCreator = {
 };
 
 const Service = (dispatch) => ({
-	search(condition) {
-		dispatch(ActionCreator.search(condition));
-		const result = search(condition);
+	async search(condition) {
+		dispatch(ActionCreator.updateCondition(condition));
+		const result = await search(condition);
 		dispatch(ActionCreator.updateSearchResult(result));
 	},
+
+
 });
 
 export default Service;
