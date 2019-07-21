@@ -1,0 +1,39 @@
+{
+	"name": "booksearch",
+	"version": "1.0.0",
+	"description": "i just search book",
+	"repository": "",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"s": "webpack-dev-server --hot",
+		"dev": "webpack --mode development",
+		"build": "webpack --mode production"
+	},
+	"author": "cacacoo",
+	"license": "ISC",
+	"dependencies": {
+		"@material-ui/core": "^3.9.2",
+		"react": "^16.8.5",
+		"react-dom": "^16.8.5",
+		"react-redux": "^6.0.1",
+		"redux": "^4.0.1",
+		"redux-thunk": "^2.3.0",
+		"redux-logger": "^3.0.6"
+	},
+	"devDependencies": {
+		"@babel/cli": "7.4.3",
+		"@babel/core": "7.4.3",
+		"@babel/preset-env": "7.4.3",
+		"@babel/preset-react": "7.0.0",
+		"babel-eslint": "10.0.1",
+		"babel-loader": "^8.0.5",
+		"babel-polyfill": "^6.26.0",
+		"webpack": "^4.20.2",
+		"webpack-cli": "^3.1.1",
+		"webpack-dev-middleware": "^3.1.2",
+		"webpack-dev-server": "^3.1.3",
+		"webpack-hot-middleware": "^2.21.2",
+		"webpack-manifest-plugin": "^2.0.0",
+		"webpack-node-externals": "^1.7.2"
+	}
+}

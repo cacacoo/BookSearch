@@ -1,0 +1,13 @@
+spring:
+
+  datasource:
+    platform: h2
+    url: jdbc:h2:mem:book
+    username: manager
+    password: manager!@
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: H2
+    show-sql: false
+    hibernate:
+      ddl-auto: create-drop
