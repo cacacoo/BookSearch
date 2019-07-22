@@ -1,7 +1,6 @@
-package com.example.booksearch.web;
+package com.example.booksearch.controller;
 
 import com.example.booksearch.domain.user.dto.UserCheckDto;
-import com.example.booksearch.domain.user.entity.User;
 import com.example.booksearch.domain.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

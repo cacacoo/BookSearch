@@ -1,8 +1,7 @@
-package com.example.booksearch.web;
+package com.example.booksearch.controller;
 
 import com.example.booksearch.domain.user.entity.UserSearchHistory;
 import com.example.booksearch.domain.user.service.UserSearchHistoryService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 public class UserSearchHistoryController {
 

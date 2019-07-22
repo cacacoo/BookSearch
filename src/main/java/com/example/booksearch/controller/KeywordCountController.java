@@ -1,4 +1,4 @@
-package com.example.booksearch.web;
+package com.example.booksearch.controller;
 
 import com.example.booksearch.domain.keyword.entity.KeywordCount;
 import com.example.booksearch.domain.keyword.service.KeywordCountService;

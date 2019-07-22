@@ -10,6 +10,9 @@ import java.util.stream.IntStream;
 @Slf4j
 public class EncryptionUtil {
 
+    private EncryptionUtil() {
+    }
+
     public static String encryptSHA256(String str) {
         if(StringUtils.isEmpty(str)) {
             return null;

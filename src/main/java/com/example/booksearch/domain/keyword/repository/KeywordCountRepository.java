@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface KeywordCountRepository extends JpaRepository<KeywordCount, Long> {
     List<KeywordCount> findTop10ByOrderBySearchCountDesc();
-
-    KeywordCount findByKeyword(String keyword);
 }

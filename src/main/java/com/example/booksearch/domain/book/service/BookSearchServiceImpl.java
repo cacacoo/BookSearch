@@ -14,17 +14,6 @@ public class BookSearchServiceImpl implements BookSearchService {
     private BookSearchRepository bookSearchRepository;
 
     @Override
-    public SearchResult findByKeyword(String keyword) {
-        if (StringUtils.isEmpty(keyword)) {
-            return null;
-        }
-
-        SearchCondition condition = new SearchCondition();
-        condition.setQuery(keyword);
-        return this.findByCondition(condition);
-    }
-
-    @Override
     public SearchResult findByCondition(SearchCondition condition) {
         if (condition == null || StringUtils.isEmpty(condition.getQuery())) {
             return null;
