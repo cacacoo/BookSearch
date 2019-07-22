@@ -4,8 +4,7 @@
 	"description": "i just search book",
 	"repository": "",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"s": "webpack-dev-server --hot",
+		"start": "webpack-dev-server --hot",
 		"dev": "webpack --mode development",
 		"build": "webpack --mode production"
 	},

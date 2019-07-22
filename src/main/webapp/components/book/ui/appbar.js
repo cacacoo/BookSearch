@@ -2,24 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import {fade, withStyles} from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import MenuItem from "@material-ui/core/MenuItem";
-import {Menu} from "@material-ui/icons";
-
 import LongMenu from "./longMenu"
 
 const useStyles = (theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
     title: {
         flexGrow: 1,
         display: 'none',
@@ -84,7 +73,6 @@ class BookAppBar extends React.Component {
 
     keyPress(e){
         if(e.keyCode === 13){
-            console.log('keyword', e.target.value);
             this.props.searchKeyword(e.target.value);
         }
     }
@@ -94,7 +82,6 @@ class BookAppBar extends React.Component {
     }
 
     handleMenuClick(menu) {
-        console.log(menu);
         this.setState({menu});
     }
 
@@ -102,8 +89,8 @@ class BookAppBar extends React.Component {
         const { classes } = this.props;
 
         return (
-            <div className={classes.root}>
-                <AppBar position="static">
+            <div>
+                <AppBar position="absolute">
                     <Toolbar>
                         <LongMenu
                             options={menus}

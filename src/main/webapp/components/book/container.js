@@ -2,55 +2,80 @@ import React from "react";
 import {connect} from "react-redux"
 import Service from "./service";
 import BookAppBar from "./ui/appbar"
-import BookDetail from "./ui/detail"
-import {
-    ExpansionPanel,
-    ExpansionPanelDetails,
-    ExpansionPanelSummary,
-    Table,
-    TableBody,
-    TableFooter,
-    TablePagination,
-    TableRow,
-    Typography
-} from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import BookTable from "./ui/bookTable"
+import {withStyles} from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Container from "@material-ui/core/Container";
+import HotKeywordList from './ui/hotKeywordList';
+import SearchHistory from './ui/searchHistory';
+
+const useStyles = (theme) => ({
+    root: {
+        display: 'flex',
+    },
+    toolbar: {
+        paddingRight: 24,
+    },
+    menuButton: {
+        marginRight: 36,
+    },
+    menuButtonHidden: {
+        display: 'none',
+    },
+    title: {
+        flexGrow: 1,
+    },
+    appBarSpacer: theme.mixins.toolbar,
+    content: {
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+    },
+    container: {
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(4),
+    },
+    paper: {
+        padding: theme.spacing(2),
+        display: 'flex',
+        overflow: 'auto',
+        flexDirection: 'column',
+    },
+    fixedHeight: {
+        height: '100%',
+    },
+});
+
 
 class BookContainer extends React.Component {
 
-    renderRows() {
+    componentDidMount() {
         const {
-            searchResult = {}
+            searchUserKeywordHistory,
+            searchHotKeywordTop10
         } = this.props;
-
-        const {
-            documents = []
-        } = searchResult;
-
-        return documents.map((book) => {
-            return (
-                <BookRow
-                    key={book.isbn}
-                    book={book}
-                />);
-        });
+        searchUserKeywordHistory('cacacoo');
+        searchHotKeywordTop10();
     }
 
     searchKeyword(keyword) {
-        this.props.search({
+        this.props.searchBook({
             query: keyword,
             page: 1,
-            size: 10
+            size: 10,
+            activeByUser: true
         });
     }
 
     handleChangePage(event, newPage) {
         const {
             condition = {},
-            search
+            searchBook
         } = this.props;
 
-        search({
+        searchBook({
             query: condition.query,
             page: newPage + 1,
             size: condition.size
@@ -60,10 +85,10 @@ class BookContainer extends React.Component {
     handleChangeRowsPerPage(event) {
         const {
             condition = {},
-            search
+            searchBook
         } = this.props;
 
-        search({
+        searchBook({
             query: condition.query,
             page: 1,
             size: +event.target.value
@@ -72,81 +97,51 @@ class BookContainer extends React.Component {
 
     render() {
         const {
-            condition = {},
-            searchResult = {}
+            condition,
+            bookResult,
+            keywordHistoryResult,
+            hotKeywordResult,
+            classes
         } = this.props;
 
-        const {
-            meta = {},
-        } = searchResult;
-
-        const {
-            pageableCount = 10,
-        } = meta;
-
-        const {
-            page,
-            size
-        } = condition;
 
         return (
-            <div>
+            <div className={classes.root}>
+                <CssBaseline />
                 <BookAppBar
-                    searchKeyword={(keyword) => this.searchKeyword(keyword)}
-                />
-                <Table>
-                    <TableBody>
-                        {this.renderRows()}
-                    </TableBody>
-                    <TableFooter>
-                        <TableRow>
-                            <TablePagination
-                                rowsPerPageOptions={[5, 10, 25]}
-                                count={pageableCount}
-                                rowsPerPage={size}
-                                page={page - 1}
-                                SelectProps={{
-                                    inputProps: {'aria-label': 'Rows per page'},
-                                    native: true,
-                                }}
-                                onChangePage={(event, page) => this.handleChangePage(event, page)}
-                                onChangeRowsPerPage={(event) => this.handleChangeRowsPerPage(event)}
-                            />
-                        </TableRow>
-                    </TableFooter>
-                </Table>
+                    searchKeyword={(keyword) => this.searchKeyword(keyword)}/>
+
+                <main className={classes.content}>
+                    <div className={classes.appBarSpacer} />
+                    <Container maxWidth="lg" className={classes.container}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} md={8} lg={9}>
+                                <Paper className={classes.fixedHeight}>
+                                    <BookTable
+                                        condition={condition}
+                                        bookResult={bookResult}
+                                        handleChangePage={(event, page) => this.handleChangePage(event, page)}
+                                        handleChangeRowsPerPage={(event) => this.handleChangeRowsPerPage(event)}
+                                    />
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} md={4} lg={3}>
+                                <Paper className={classes.paper}>
+                                    <HotKeywordList hotKeywordResult={hotKeywordResult}/>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Paper className={classes.paper}>
+                                    <SearchHistory keywordHistoryResult={keywordHistoryResult}/>
+                                </Paper>
+                            </Grid>
+                        </Grid>
+                    </Container>
+                </main>
             </div>
         )
     }
 }
 
-class BookRow extends React.Component {
-
-    render() {
-        const {
-            book = {}
-        } = this.props;
-
-        const {
-            title = '',
-            isbn = '',
-        } = book;
-
-        return (
-            <ExpansionPanel key={isbn}>
-                <ExpansionPanelSummary
-                    expandIcon={<ExpandMoreIcon/>}
-                    aria-controls="panel1c-content"
-                    id="panel1c-header">
-                    <Typography>{title}</Typography>
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
-                    <BookDetail book={book}/>
-                </ExpansionPanelDetails>
-            </ExpansionPanel>
-        );
-    }
-}
-
-export default connect(state => state, Service)(BookContainer);
+export default connect(state => state, Service)(withStyles(useStyles)(BookContainer));
 
