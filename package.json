@@ -5,6 +5,7 @@
 	"repository": "",
 	"scripts": {
 		"start": "webpack-dev-server --hot",
+	  	"start2": "cross-env NODE_PATH=src react-scripts start",
 		"dev": "webpack --mode development",
 		"build": "webpack --mode production"
 	},
@@ -21,7 +22,8 @@
 		"redux": "^4.0.1",
 		"redux-logger": "^3.0.6",
 		"redux-thunk": "^2.3.0",
-	  "clsx": "latest"
+		"clsx": "latest",
+		"react-router-dom": "5.0.1"
 	},
 	"devDependencies": {
 		"@babel/cli": "7.4.3",

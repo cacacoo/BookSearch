@@ -39,19 +39,10 @@ const Service = (dispatch) => ({
 		dispatch(ActionCreator.updateCondition(condition));
 		const result = await searchBook(condition);
 		dispatch(ActionCreator.updateBookResult(result));
-
-		if(condition.activeByUser) {
-			this.putUserKeywordHistory(condition.query);
-			this.putKeywordCount(condition.query);
-		}
 	},
 
-	async putUserKeywordHistory(keyword) {
-		const userId = 'cacacoo';
-		const response = await putUserKeywordHistory(userId, keyword);
-		if(response) {
-			this.searchUserKeywordHistory(userId)
-		}
+	async putUserKeywordHistory(userId, keyword) {
+		await putUserKeywordHistory(userId, keyword);
 	},
 
 	async searchUserKeywordHistory(userId) {
@@ -60,17 +51,13 @@ const Service = (dispatch) => ({
 	},
 
 	async putKeywordCount(keyword) {
-		const response = await putUserKeywordCount(keyword);
-		if(response) {
-			this.searchHotKeywordTop10()
-		}
+		await putUserKeywordCount(keyword);
 	},
 
 	async searchHotKeywordTop10() {
 		const result = await searchHotKeywordTop10();
 		dispatch(ActionCreator.updateHotKeywordResult(result));
 	},
-
 });
 
 export default Service;

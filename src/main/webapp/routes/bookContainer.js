@@ -1,15 +1,15 @@
 import React from "react";
 import {connect} from "react-redux"
-import Service from "./service";
-import BookAppBar from "./ui/appbar"
-import BookTable from "./ui/bookTable"
+import Service from "../components/book/service";
+import BookAppBar from "../components/book/ui/appbar"
+import BookTable from "../components/book/ui/bookTable"
 import {withStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
-import HotKeywordList from './ui/hotKeywordList';
-import SearchHistory from './ui/searchHistory';
+import HotKeywordList from '../components/book/ui/hotKeywordList';
+import SearchHistory from '../components/book/ui/searchHistory';
 
 const useStyles = (theme) => ({
     root: {
@@ -53,25 +53,47 @@ class BookContainer extends React.Component {
 
     componentDidMount() {
         const {
+            user = {},
             searchUserKeywordHistory,
             searchHotKeywordTop10
         } = this.props;
-        searchUserKeywordHistory('cacacoo');
+        const { userInfo = {} }= user;
+        const { userId = ''} = userInfo;
+
+        searchUserKeywordHistory(userId);
         searchHotKeywordTop10();
     }
 
     searchKeyword(keyword) {
-        this.props.searchBook({
-            query: keyword,
-            page: 1,
-            size: 10,
-            activeByUser: true
+        const {
+            user = {},
+            searchBook,
+            putUserKeywordHistory,
+            putKeywordCount,
+            searchUserKeywordHistory,
+            searchHotKeywordTop10
+        } = this.props;
+
+        const { userInfo = {} }= user;
+        const { userId = ''} = userInfo;
+
+        Promise.all([
+            searchBook({
+                query: keyword,
+                page: 1,
+                size: 10,
+            }),
+            putUserKeywordHistory(userId, keyword),
+            putKeywordCount(keyword)]
+        ).then(() => {
+            searchUserKeywordHistory(userId);
+            searchHotKeywordTop10();
         });
     }
 
     handleChangePage(event, newPage) {
         const {
-            condition = {},
+            book : { condition = {} },
             searchBook
         } = this.props;
 
@@ -84,8 +106,10 @@ class BookContainer extends React.Component {
 
     handleChangeRowsPerPage(event) {
         const {
-            condition = {},
-            searchBook
+            book : {
+                condition = {},
+                searchBook
+            }
         } = this.props;
 
         searchBook({
@@ -97,13 +121,14 @@ class BookContainer extends React.Component {
 
     render() {
         const {
-            condition,
-            bookResult,
-            keywordHistoryResult,
-            hotKeywordResult,
+            book : {
+                condition,
+                bookResult,
+                keywordHistoryResult,
+                hotKeywordResult,
+            },
             classes
         } = this.props;
-
 
         return (
             <div className={classes.root}>
