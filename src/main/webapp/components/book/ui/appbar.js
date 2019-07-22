@@ -8,6 +8,10 @@ import InputBase from '@material-ui/core/InputBase';
 import {fade, withStyles} from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import MenuItem from "@material-ui/core/MenuItem";
+import {Menu} from "@material-ui/icons";
+
+import LongMenu from "./longMenu"
 
 const useStyles = (theme) => ({
     root: {
@@ -62,22 +66,36 @@ const useStyles = (theme) => ({
     },
 });
 
+const menus = [
+    'Book Search',
+    'My Keyword History',
+    'Hot Keyword 10'
+];
+
 class BookAppBar extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {value:''};
+        this.state = {
+            keyword:'',
+            menu: ''
+        };
     }
 
     keyPress(e){
         if(e.keyCode === 13){
-            console.log('value', e.target.value);
+            console.log('keyword', e.target.value);
             this.props.searchKeyword(e.target.value);
         }
     }
 
     handleChange(e){
-        this.setState({value: e.target.value})
+        this.setState({keyword: e.target.value})
+    }
+
+    handleMenuClick(menu) {
+        console.log(menu);
+        this.setState({menu});
     }
 
     render() {
@@ -87,14 +105,10 @@ class BookAppBar extends React.Component {
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        <IconButton
-                            edge="start"
-                            className={classes.menuButton}
-                            color="inherit"
-                            aria-label="Open drawer"
-                        >
-                            <MenuIcon/>
-                        </IconButton>
+                        <LongMenu
+                            options={menus}
+                            handleMenuClick={(menu) => this.handleMenuClick(menu)}
+                        />
                         <Typography className={classes.title} variant="h6" noWrap>
                             Book Search
                         </Typography>
@@ -109,7 +123,7 @@ class BookAppBar extends React.Component {
                                     input: classes.inputInput,
                                 }}
                                 inputProps={{'aria-label': 'Search'}}
-                                value={this.state.value}
+                                value={this.state.keyword}
                                 onChange={e => this.handleChange(e)}
                                 onKeyDown={e => this.keyPress(e)}
                             />

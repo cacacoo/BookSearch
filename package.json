@@ -14,13 +14,15 @@
 	"dependencies": {
 		"@material-ui/core": "^4.2.1",
 		"@material-ui/icons": "^4.2.1",
+		"moment": "^2.24.0",
+		"prop-types": "latest",
 		"react": "^16.8.5",
 		"react-dom": "^16.8.5",
 		"react-redux": "^6.0.1",
 		"redux": "^4.0.1",
 		"redux-logger": "^3.0.6",
 		"redux-thunk": "^2.3.0",
-	  	"prop-types": "latest"
+	  "clsx": "latest"
 	},
 	"devDependencies": {
 		"@babel/cli": "7.4.3",
