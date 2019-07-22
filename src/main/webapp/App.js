@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch} from 'react-router-dom';
-import { SignIn, SignUp, BookContainer } from './routes';
+import { SignIn, BookContainer } from './routes';
 
 export default class App extends React.Component {
     render() {
@@ -8,8 +8,7 @@ export default class App extends React.Component {
             <div>
                 <Switch>
                     <Route exact path="/" component={SignIn}/>
-                    <Route path="/signUp" component={SignUp}/>
-                    <Route path="/book" component={BookContainer}/>
+                    <Route exact path="/book" component={BookContainer}/>
                 </Switch>
             </div>
         );

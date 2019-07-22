@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux"
 import Service from "../components/book/service";
+import UserService from "../components/user/service";
 import BookAppBar from "../components/book/ui/appbar"
 import BookTable from "../components/book/ui/bookTable"
 import {withStyles} from "@material-ui/core";
@@ -10,6 +11,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import HotKeywordList from '../components/book/ui/hotKeywordList';
 import SearchHistory from '../components/book/ui/searchHistory';
+import {Redirect} from "react-router-dom";
 
 const useStyles = (theme) => ({
     root: {
@@ -119,8 +121,13 @@ class BookContainer extends React.Component {
         });
     }
 
+    handleLogOut() {
+        UserService.logOut();
+    }
+
     render() {
         const {
+            user = {},
             book : {
                 condition,
                 bookResult,
@@ -130,12 +137,20 @@ class BookContainer extends React.Component {
             classes
         } = this.props;
 
+        const { userInfo = {} }= user;
+        const { userId = ''} = userInfo;
+
+        if(!userId) {
+            return (<Redirect to="/"/>)
+        }
+
         return (
             <div className={classes.root}>
                 <CssBaseline />
                 <BookAppBar
+                    userInfo={userInfo}
+                    handleLogOut={()=> this.handleLogOut()}
                     searchKeyword={(keyword) => this.searchKeyword(keyword)}/>
-
                 <main className={classes.content}>
                     <div className={classes.appBarSpacer} />
                     <Container maxWidth="lg" className={classes.container}>

@@ -56,9 +56,7 @@ const useStyles = (theme) => ({
 });
 
 const menus = [
-    'Book Search',
-    'My Keyword History',
-    'Hot Keyword 10'
+    'logOut'
 ];
 
 class BookAppBar extends React.Component {
@@ -83,10 +81,14 @@ class BookAppBar extends React.Component {
 
     handleMenuClick(menu) {
         this.setState({menu});
+        if(menu === "logOut") {
+            this.props.handleLogOut()
+        }
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, userInfo } = this.props;
+        const { userId = ''} = userInfo || {};
 
         return (
             <div>
@@ -97,6 +99,9 @@ class BookAppBar extends React.Component {
                             handleMenuClick={(menu) => this.handleMenuClick(menu)}
                         />
                         <Typography className={classes.title} variant="h6" noWrap>
+                            {userId} 님
+                        </Typography>
+                        <Typography>
                             Book Search
                         </Typography>
                         <div className={classes.search}>

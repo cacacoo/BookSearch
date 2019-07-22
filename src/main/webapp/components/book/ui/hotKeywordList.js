@@ -18,14 +18,16 @@ class HotKeywordList extends React.Component {
             hotKeywordResult = [],
         } = this.props;
 
+        let index = 0;
         return hotKeywordResult.map((keywordCount) => {
+            index = index+1;
             const {
                 keyword,
                 searchCount
             } = keywordCount;
 
             return (
-                <ListItem button>
+                <ListItem button key={"itemkey-"+index}>
                     <ListItemText primary={keyword} />
                     <ListItemText secondary={searchCount} />
                 </ListItem>

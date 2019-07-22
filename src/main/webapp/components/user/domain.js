@@ -14,17 +14,6 @@ export const logIn = async (userId, pwd) => {
 	}
 };
 
-export const logOut = async (userId) => {
-	if(!userId) return false;
-
-	try {
-		const response = await fetch('/log/out');
-		return await response.json();
-	} catch (err) {
-		console.error(err);
-	}
-};
-
 export const signUp = async (userId, pwd) => {
 	if(!userId || !pwd) return {
 		success: false,

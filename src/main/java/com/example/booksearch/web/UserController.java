@@ -25,9 +25,4 @@ public class UserController {
         return userService.checkLogin(userId, pwd);
     }
 
-    @GetMapping("/log/out")
-    public boolean logIn(@RequestParam String userId) {
-        //만약 세션을 이용하고 있다면 세션을 지워주는 용도로 쓰일 예정
-        return true;
-    }
 }

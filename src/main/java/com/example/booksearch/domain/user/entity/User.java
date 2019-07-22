@@ -1,5 +1,6 @@
 package com.example.booksearch.domain.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -22,6 +23,7 @@ public class User {
     @Column(unique=true)
     private String userId;
 
+    @JsonIgnore
     private String pwd;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)

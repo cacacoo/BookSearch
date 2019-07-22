@@ -13,7 +13,7 @@ const Reducer = (state = {}, action) => {
 				failMessage: action.value.message
 			});
 		case Actions.LOGOUT:
-			return Object.assign({}, state, { userInfo: {} });
+			return Object.assign({}, state,{});
 
 		default:
 			return state;

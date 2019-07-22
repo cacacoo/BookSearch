@@ -1,7 +1,6 @@
 import Action from './actions'
 import {
 	logIn,
-	logOut,
 	signUp
 } from './domain'
 
@@ -36,11 +35,8 @@ const Service = (dispatch) => ({
 		dispatch(ActionCreator.logIn(response));
 	},
 
-	async logOut(userId) {
-		const response = await logOut(userId);
-		if(response) {
-			dispatch(ActionCreator.logOut());
-		}
+	async logOut() {
+		dispatch(ActionCreator.logOut());
 	},
 
 });
