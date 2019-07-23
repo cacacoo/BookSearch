@@ -17,11 +17,6 @@ const ActionCreator = {
 			value: response
 		}
 	},
-	logOut() {
-		return {
-			type: Action.LOGOUT
-		}
-	}
 };
 
 const Service = (dispatch) => ({
@@ -34,11 +29,6 @@ const Service = (dispatch) => ({
 		const response = await logIn(userId, pwd);
 		dispatch(ActionCreator.logIn(response));
 	},
-
-	async logOut() {
-		dispatch(ActionCreator.logOut());
-	},
-
 });
 
 export default Service;

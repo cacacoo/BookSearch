@@ -11,6 +11,10 @@ export const logIn = async (userId, pwd) => {
 		return await response.json();
 	} catch (err) {
 		console.error(err);
+		return {
+			success: false,
+			message: "로그인에 실패했습니다."
+		};
 	}
 };
 
@@ -27,6 +31,10 @@ export const signUp = async (userId, pwd) => {
 		return await response.json();
 	} catch (err) {
 		console.error(err);
+		return {
+			success: false,
+			message: "가입에 실패했습니다."
+		};
 	}
 };
 

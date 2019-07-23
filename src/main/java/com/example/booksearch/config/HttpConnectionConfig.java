@@ -13,8 +13,8 @@ public class HttpConnectionConfig {
     @Bean
     public RestTemplate getCustomRestTemplate(){
         HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-        httpRequestFactory.setConnectTimeout(2000);
-        httpRequestFactory.setReadTimeout(3000);
+        httpRequestFactory.setConnectTimeout(5000);
+        httpRequestFactory.setReadTimeout(5000);
         HttpClient httpClient = HttpClientBuilder.create()
             .setMaxConnTotal(200)
             .setMaxConnPerRoute(20)

@@ -14,6 +14,7 @@ export const searchBook = async (condition) => {
 		return await response.json();
 	} catch (err) {
 		console.error(err);
+		return {};
 	}
 };
 
@@ -24,6 +25,7 @@ export const searchUserKeywordHistory = async (userId) => {
 		return await response.json();
 	} catch (err) {
 		console.error(err);
+		return [];
 	}
 };
 
@@ -37,7 +39,7 @@ export const searchHotKeywordTop10 = async () => {
 };
 
 export const putUserKeywordHistory = async (userId, keyword) => {
-	if(!userId || !keyword) return false;
+	if(!userId || !keyword) return;
 
 	try {
 		const response = await fetch(
@@ -50,7 +52,7 @@ export const putUserKeywordHistory = async (userId, keyword) => {
 };
 
 export const putUserKeywordCount = async (keyword) => {
-	if(!keyword) return false;
+	if(!keyword) return;
 
 	try {
 		const response = await fetch(

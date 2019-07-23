@@ -5,14 +5,12 @@ import lombok.Getter;
 @Getter
 public enum SortType {
 
-    ACCURACY("accuracy", "정확도"),
-    RECENCY("recency","최신순");
+    ACCURACY("accuracy"),
+    RECENCY("recency");
 
     private String value;
-    private String name;
 
-    SortType(String value, String name) {
+    SortType(String value) {
         this.value = value;
-        this.name = name;
     }
 }

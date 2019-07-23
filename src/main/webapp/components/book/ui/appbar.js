@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import {fade, withStyles} from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import LongMenu from "./longMenu"
 
 const useStyles = (theme) => ({
     title: {
@@ -79,13 +78,6 @@ class BookAppBar extends React.Component {
         this.setState({keyword: e.target.value})
     }
 
-    handleMenuClick(menu) {
-        this.setState({menu});
-        if(menu === "logOut") {
-            this.props.handleLogOut()
-        }
-    }
-
     render() {
         const { classes, userInfo } = this.props;
         const { userId = ''} = userInfo || {};
@@ -94,10 +86,6 @@ class BookAppBar extends React.Component {
             <div>
                 <AppBar position="absolute">
                     <Toolbar>
-                        <LongMenu
-                            options={menus}
-                            handleMenuClick={(menu) => this.handleMenuClick(menu)}
-                        />
                         <Typography className={classes.title} variant="h6" noWrap>
                             {userId} 님
                         </Typography>

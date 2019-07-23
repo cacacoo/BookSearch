@@ -1,13 +1,18 @@
 spring:
-
   datasource:
     platform: h2
     url: jdbc:h2:mem:book
     username: manager
     password: manager!@
     driver-class-name: org.h2.Driver
+
   jpa:
     database-platform: H2
     show-sql: false
     hibernate:
       ddl-auto: create-drop
+
+kakao:
+  api:
+    auth: KakaoAK 78651b99868fe4502d0f7b0382876d47
+    url: https://dapi.kakao.com/v3/search/book

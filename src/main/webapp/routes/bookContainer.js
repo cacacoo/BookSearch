@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux"
 import Service from "../components/book/service";
-import UserService from "../components/user/service";
 import BookAppBar from "../components/book/ui/appbar"
 import BookTable from "../components/book/ui/bookTable"
 import {withStyles} from "@material-ui/core";
@@ -108,10 +107,8 @@ class BookContainer extends React.Component {
 
     handleChangeRowsPerPage(event) {
         const {
-            book : {
-                condition = {},
-                searchBook
-            }
+            book : { condition = {} },
+            searchBook
         } = this.props;
 
         searchBook({
@@ -119,10 +116,6 @@ class BookContainer extends React.Component {
             page: 1,
             size: +event.target.value
         });
-    }
-
-    handleLogOut() {
-        UserService.logOut();
     }
 
     render() {
@@ -149,7 +142,6 @@ class BookContainer extends React.Component {
                 <CssBaseline />
                 <BookAppBar
                     userInfo={userInfo}
-                    handleLogOut={()=> this.handleLogOut()}
                     searchKeyword={(keyword) => this.searchKeyword(keyword)}/>
                 <main className={classes.content}>
                     <div className={classes.appBarSpacer} />

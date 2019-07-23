@@ -29,7 +29,7 @@ public class KeywordCountServiceImpl implements KeywordCountService {
     @Transactional
     public KeywordCount recordKeywordCount(String keyword) {
         if (keyword == null) {
-            throw new IllegalArgumentException("keyword can't be null");
+            throw new IllegalArgumentException("keyword 값은 필수값입니다.");
         }
 
         TypedQuery<KeywordCount> typedQuery = entityManager.createQuery(

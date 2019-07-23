@@ -16,9 +16,12 @@ public class UserSearchHistoryServiceImpl implements UserSearchHistoryService {
     private UserSearchRepository userSearchRepository;
 
     @Override
-    public boolean save(String userId, String keyword) {
-        userSearchRepository.save(new UserSearchHistory(userId, keyword));
-        return true;
+    public UserSearchHistory save(String userId, String keyword) {
+        if(StringUtils.isEmpty(userId) || StringUtils.isEmpty(keyword)) {
+            throw new IllegalArgumentException("필수값이 비었습니다.");
+        }
+
+        return userSearchRepository.save(new UserSearchHistory(userId, keyword));
     }
 
     @Override

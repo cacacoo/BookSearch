@@ -17,7 +17,7 @@ public class UserSearchHistoryController {
     private UserSearchHistoryService userSearchHistoryService;
 
     @PutMapping("/user/search")
-    public boolean saveSearchHistory(@RequestParam String userId, @RequestParam String keyword) {
+    public UserSearchHistory saveSearchHistory(@RequestParam String userId, @RequestParam String keyword) {
         return userSearchHistoryService.save(userId, keyword);
     }
 

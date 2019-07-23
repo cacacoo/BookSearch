@@ -12,9 +12,6 @@ const Reducer = (state = {}, action) => {
 				userInfo: action.value.user,
 				failMessage: action.value.message
 			});
-		case Actions.LOGOUT:
-			return Object.assign({}, state,{});
-
 		default:
 			return state;
 	}

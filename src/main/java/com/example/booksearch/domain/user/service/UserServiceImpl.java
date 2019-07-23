@@ -32,16 +32,10 @@ public class UserServiceImpl implements UserService {
         }
 
         String encryptPwd= EncryptionUtil.encryptSHA256(pwd);
-        if(encryptPwd == null) {
-            return UserCheckDto.builder()
-                .success(false)
-                .message("pwd 암호화에 실패했습니다")
-                .build();
-        }
-
         User user= userRepository.save(new User(userId, encryptPwd));
         return UserCheckDto.builder()
             .success(true)
+            .message("가입 성공. 로그인해주세요")
             .user(user)
             .build();
     }
@@ -59,7 +53,7 @@ public class UserServiceImpl implements UserService {
         if(user == null) {
             return UserCheckDto.builder()
                 .success(false)
-                .message("고객을 찾을 수 없습니다.")
+                .message("고객을 찾을 수 없습니다")
                 .build();
         }
 
@@ -67,10 +61,9 @@ public class UserServiceImpl implements UserService {
         if(!user.getPwd().equals(encryptPwd)) {
             return UserCheckDto.builder()
                 .success(false)
-                .message("비밀번호가 틀렸습니다.")
+                .message("비밀번호가 틀렸습니다")
                 .build();
         }
-
 
         return UserCheckDto.builder()
             .success(true)
