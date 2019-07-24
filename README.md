@@ -4,6 +4,7 @@
 - httpClient : RestTemplate 요청 client pool 생성, 커넥션 관리
 - gson : json data object mapping 용도
 - lombok : 각종 util 사용 용도
+- ehcache: 캐싱 적용
 
 ## front end 사용 오픈 소스
 - webpack : 의존 관계에 있는 모듈들을 하나의 자바스크립트 파일로 번들링하는 모듈 번들러

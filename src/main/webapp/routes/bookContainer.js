@@ -63,6 +63,9 @@ class BookContainer extends React.Component {
 
         searchUserKeywordHistory(userId);
         searchHotKeywordTop10();
+        setInterval(() => {
+            searchHotKeywordTop10();
+        },3000);
     }
 
     searchKeyword(keyword) {
@@ -72,7 +75,6 @@ class BookContainer extends React.Component {
             putUserKeywordHistory,
             putKeywordCount,
             searchUserKeywordHistory,
-            searchHotKeywordTop10
         } = this.props;
 
         const { userInfo = {} }= user;
@@ -88,7 +90,6 @@ class BookContainer extends React.Component {
             putKeywordCount(keyword)]
         ).then(() => {
             searchUserKeywordHistory(userId);
-            searchHotKeywordTop10();
         });
     }
 

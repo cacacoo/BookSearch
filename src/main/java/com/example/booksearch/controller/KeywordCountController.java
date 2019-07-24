@@ -1,6 +1,7 @@
 package com.example.booksearch.controller;
 
-import com.example.booksearch.domain.keyword.entity.KeywordCount;
+import com.example.booksearch.domain.keyword.dto.KeywordCount;
+import com.example.booksearch.domain.keyword.entity.Keyword;
 import com.example.booksearch.domain.keyword.service.KeywordCountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +23,8 @@ public class KeywordCountController {
     }
 
     @PutMapping("/keyword/count")
-    public KeywordCount recordKeywordCount(@RequestParam String keyword) {
-        return keywordCountService.recordKeywordCount(keyword);
+    public Keyword recordKeywordCount(@RequestParam String keyword) {
+        return keywordCountService.recordKeyword(keyword);
     }
 
 }

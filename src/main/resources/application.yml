@@ -12,6 +12,10 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
+  cache:
+    ehcache:
+      config: classpath:ehcache.xml
+
 kakao:
   api:
     auth: KakaoAK 78651b99868fe4502d0f7b0382876d47

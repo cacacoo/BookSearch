@@ -1,49 +1,39 @@
 package com.example.booksearch.domain.keyword.service;
 
-import com.example.booksearch.domain.keyword.entity.KeywordCount;
-import com.example.booksearch.domain.keyword.repository.KeywordCountRepository;
+import com.example.booksearch.domain.keyword.dto.KeywordCount;
+import com.example.booksearch.domain.keyword.entity.Keyword;
+import com.example.booksearch.domain.keyword.repository.KeywordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
-import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
+import java.math.BigInteger;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class KeywordCountServiceImpl implements KeywordCountService {
 
     @Autowired
-    private KeywordCountRepository keywordCountRepository;
+    private KeywordRepository keywordRepository;
 
-    @Autowired
-    private EntityManager entityManager;
+    private static final String TOP_KEYWORD = "topkeyword";
 
     @Override
+    @Cacheable(TOP_KEYWORD)
     public List<KeywordCount> getTopKeywordCount() {
-        return keywordCountRepository.findTop10ByOrderBySearchCountDesc();
+        List<Object[]> resultList = keywordRepository.findTop10Keyword();
+        return resultList.stream().map(result -> KeywordCount.builder()
+            .keyword((String) result[0])
+            .searchCount((BigInteger) result[1])
+            .build()).collect(Collectors.toList());
     }
 
-    @Override
-    @Transactional
-    public KeywordCount recordKeywordCount(String keyword) {
+    public Keyword recordKeyword(String keyword) {
         if (keyword == null) {
             throw new IllegalArgumentException("keyword 값은 필수값입니다.");
         }
-
-        TypedQuery<KeywordCount> typedQuery = entityManager.createQuery(
-            "select kc from KeywordCount kc where kc.keyword = :keyword", KeywordCount.class);
-        typedQuery.setLockMode(LockModeType.PESSIMISTIC_WRITE);
-
-        KeywordCount keywordCount =
-            typedQuery.setParameter("keyword", keyword).getResultStream().findFirst().orElse(null);
-        if (keywordCount != null) {
-            keywordCount.setSearchCount(keywordCount.getSearchCount() + 1);
-            return keywordCount;
-        }
-
-        return keywordCountRepository.save(new KeywordCount(keyword, 1L));
+        return keywordRepository.save(new Keyword(keyword));
     }
 
 }
